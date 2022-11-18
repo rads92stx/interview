@@ -13,10 +13,14 @@ function App() {
   useEffect(() => {
     setIsLoading(true);
     const fetchPropertyData = async () => {
-      const response = await fetch("/property-data.json");
-      const json = await response.json();
-
-      setProperties(json.result.properties.elements || []);
+      let json;
+      try {
+        const response = await fetch("/property-data.json");
+        json = await response.json();
+      } catch (e) {
+        console.error(e);
+      }
+      setProperties(json?.result?.properties?.elements || []);
       setIsLoading(false);
     };
 
